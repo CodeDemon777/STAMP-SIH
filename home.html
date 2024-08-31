@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philatelists Community</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="menu-icon" onclick="toggleNav()">&#9776;</div>
+        <div class="logo">
+            <img src="logo.png" alt="Philatelists Community Logo">
+        </div>
+        <div class="user-icons">
+            <a href="login.html" class="icon"><i class="fas fa-user-circle"></i></a>
+        </div>
+    </header>
+
+    <nav id="sideNav" class="side-nav">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleNav()">&times;</a>
+        <input type="text" placeholder="Search Philatelic Items..." class="side-search">
+        <a href="#home">Home</a>
+        <a href="#about-us">About Us</a>
+        <a href="/Philatelic Materials.html">Philatelic Materials</a>
+        <a href="/Deposit Account.html">National Philately Deposit Account</a>
+        <a href="/Special Cancellations.html">Special Cancellations</a>
+        <a href="product details.html">product details</a>
+        <a href="#contact-us">Contact Us</a>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <img src="hero-banner.jpg" alt="Philatelic Collection Banner">
+            <div class="hero-content">
+                <h1>Connecting Philatelists Across India</h1>
+                <a href="#materials" class="cta-button">Explore Philatelic Materials</a>
+            </div>
+        </section>
+
+        <!-- Featured Sections -->
+        <section class="featured">
+            <div class="section new-releases">
+                <h2>New Releases</h2>
+                <div class="carousel">
+                    <!-- Carousel Items -->
+                    <div class="carousel-item">New Release 1</div>
+                    <div class="carousel-item">New Release 2</div>
+                    <div class="carousel-item">New Release 3</div>
+                </div>
+            </div>
+
+            <div class="section popular-items">
+                <h2>Popular Items</h2>
+                <div class="grid">
+                    <!-- Grid Items -->
+                    <div class="grid-item">Popular Item 1</div>
+                    <div class="grid-item">Popular Item 2</div>
+                    <div class="grid-item">Popular Item 3</div>
+                </div>
+            </div>
+
+            <div class="section how-it-works">
+                <h2>How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <h3>1. Explore</h3>
+                        <p>Discover philatelic materials from across India.</p>
+                    </div>
+                    <div class="step">
+                        <h3>2. Add to Deposit Account</h3>
+                        <p>Select your items and add them to your National Philately Deposit Account.</p>
+                    </div>
+                    <div class="step">
+                        <h3>3. Order & Receive</h3>
+                        <p>Place your order and receive your items at your doorstep.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="updates-box" id="updatesBox">
+        <h2>Latest Updates</h2>
+        <p id="updateText">Update 1: New stamp collection released by the Delhi Postal Circle.</p>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#terms">Terms of Service</a>
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#faqs">FAQs</a>
+        </div>
+        <div class="social-media">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2024 Philatelists Community. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            var sideNav = document.getElementById("sideNav");
+            if (sideNav.style.width === "250px") {
+                sideNav.style.width = "0";
+            } else {
+                sideNav.style.width = "250px";
+            }
+        }
+
+        // Dynamic update content
+        const updates = [
+            "Update 1: New stamp collection released by the Delhi Postal Circle.",
+            "Update 2: Workshop on rare philatelic materials scheduled for next week.",
+            "Update 3: New feature added to the National Philately Deposit Account.",
+            "Update 4: Special cancellation stamp available in Mumbai this month.",
+        ];
+        let updateIndex = 0;
+        setInterval(() => {
+            updateIndex = (updateIndex + 1) % updates.length;
+            document.getElementById("updateText").textContent = updates[updateIndex];
+        }, 30000);
+    </script>
+</body>
+</html>

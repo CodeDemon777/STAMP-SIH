@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philatelic Items Display</title>
+    <link rel="stylesheet" href="Philatelic Materials.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Filter and Sort Options -->
+        <div class="filter-sort-container">
+            <div class="filters">
+                <h3>Filters</h3>
+                <label for="postal-circle">Postal Circle:</label>
+                <select id="postal-circle">
+                    <option value="all">All</option>
+                    <option value="circle1">Circle 1</option>
+                    <option value="circle2">Circle 2</option>
+                    <!-- Add more options as needed -->
+                </select>
+
+                <label for="material-type">Type of Material:</label>
+                <select id="material-type">
+                    <option value="all">All</option>
+                    <option value="stamps">Stamps</option>
+                    <option value="covers">Covers</option>
+                    <option value="postcards">Postcards</option>
+                </select>
+
+                <label for="year-release">Year of Release:</label>
+                <input type="number" id="year-release" min="1900" max="2024">
+
+                <label for="theme">Theme:</label>
+                <select id="theme">
+                    <option value="all">All</option>
+                    <option value="wildlife">Wildlife</option>
+                    <option value="history">History</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+
+            <div class="sort">
+                <h3>Sort By</h3>
+                <select id="sort-options">
+                    <option value="most-recent">Most Recent</option>
+                    <option value="most-popular">Most Popular</option>
+                    <option value="price">Price</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Grid/List Display -->
+        <div class="item-display">
+            <!-- Item example -->
+            <div class="item">
+                <img src="stamp-thumbnail.jpg" alt="Stamp Thumbnail">
+                <div class="item-details">
+                    <h4>Title of the Philatelic Item</h4>
+                    <p>Postal Circle: Circle 1</p>
+                    <p>Price: $10.00</p>
+                    <button class="add-to-account">Add to Deposit Account</button>
+                    <a href="#" class="view-details">View Details</a>
+                </div>
+            </div>
+            <!-- Repeat item structure for more items -->
+
+            <!-- Pagination (Optional) -->
+            <div class="pagination">
+                <button class="prev">Previous</button>
+                <button class="next">Next</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

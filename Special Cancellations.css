@@ -1,0 +1,86 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Introduction Section */
+.introduction {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.introduction h2 {
+  margin-top: 0;
+}
+
+.introduction p {
+  line-height: 1.6;
+}
+
+/* Cancellations Display */
+.cancellations-display {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cancellations-display h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.cancellation-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+}
+
+.cancellation-item img {
+  max-width: 150px;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.cancellation-details {
+  flex-grow: 1;
+}
+
+.cancellation-details h3 {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.cancellation-details p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.request-cancellation {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.request-cancellation:hover {
+  background-color: #0056b3;
+}

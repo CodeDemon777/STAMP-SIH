@@ -1,0 +1,105 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Account Summary */
+.account-summary, .wishlist, .order-history, .deposit-management, .track-orders, .profile-settings {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.account-summary h2, .wishlist h2, .order-history h2, .deposit-management h2, .track-orders h2, .profile-settings h2 {
+  margin-top: 0;
+}
+
+.summary-card p {
+  font-size: 1.1em;
+  margin: 10px 0;
+}
+
+.summary-card span {
+  font-weight: bold;
+}
+
+/* Wishlist */
+.wishlist ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.wishlist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.wishlist-item button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.wishlist-item button:hover {
+  background-color: #c0392b;
+}
+
+/* Order History */
+.order-history table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-history th, .order-history td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-history th {
+  background-color: #f2f2f2;
+}
+
+/* Deposit Management */
+.deposit-management button, .profile-settings button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deposit-management button:hover, .profile-settings button:hover {
+  background-color: #0056b3;
+}
+
+/* Track Orders */
+.tracking-details p {
+  margin: 5px 0;
+}
+
+/* Profile Settings */
+.profile-settings button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
