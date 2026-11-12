@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postal Officer Portal - India Post Philately Administration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        .admin-container {
+            max-width: 1300px;
+            margin: calc(var(--topbar-height) + var(--header-height) + 24px) auto 50px;
+            padding: 0 24px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .metric-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .metric-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+        .metric-info h4 {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .metric-info span {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: block;
+            margin-top: 2px;
+        }
+        .admin-section {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 26px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        .admin-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+        .admin-section-header h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .data-table th, .data-table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .data-table th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .data-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. Indian Government Accessibility Top Bar -->
+    <div class="gov-topbar">
+        <div class="gov-topbar-left">
+            <span class="emblem-flag">🇮🇳</span>
+            <span>भारत सरकार | Government of India</span>
+            <span style="opacity: 0.4;">|</span>
+            <span>संचार मंत्रालय | Ministry of Communications</span>
+        </div>
+        <div class="gov-topbar-right">
+            <div class="font-resizer">
+                <button onclick="resizeFont(-1)">A-</button>
+                <button onclick="resizeFont(0)">A</button>
+                <button onclick="resizeFont(1)">A+</button>
+            </div>
+            <span style="opacity: 0.4;">|</span>
+            <span style="font-weight: 600; color: #fef08a;">English</span>
+        </div>
+    </div>
+
+    <!-- 2. Main Portal Header -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="menu-icon" onclick="toggleNav()" title="Open Navigation Menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <a href="home.html" class="brand-section">
+                <div class="gov-crest"><i class="fas fa-user-shield"></i></div>
+                <div class="brand-titles">
+                    <h1>INDIA POST <span style="color: var(--accent);">OFFICER PORTAL</span></h1>
+                    <span class="dept-tag">National Philately Deposit Management Back-Office</span>
+                </div>
+            </a>
+        </div>
+        <div class="header-right-nav">
+            <a href="Deposit Account.html" class="btn-outline" style="color: white; border-color: rgba(255,255,255,0.4); font-size: 0.88rem;"><i class="fas fa-wallet"></i> My PDA</a>
+            <button onclick="Auth.logout()" class="user-status-btn" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+        </div>
+    </header>
+
+    <!-- 3. Side Navigation Drawer -->
+    <nav id="sideNav" class="side-nav">
+        <div class="side-nav-header">
+            <h3><i class="fas fa-compass"></i> Postal Navigation</h3>
+            <span class="close-btn" onclick="toggleNav(true)">&times;</span>
+        </div>
+        <div class="side-nav-body">
+            <a href="home.html"><i class="fas fa-home"></i> Public Home</a>
+            <a href="Philatelic Materials.html"><i class="fas fa-layer-group"></i> Catalog Display</a>
+            <a href="Deposit Account.html"><i class="fas fa-wallet"></i> Collector PDA Dashboard</a>
+            <a href="Special Cancellations.html"><i class="fas fa-stamp"></i> Special Postmarks & Cancellations</a>
+            <a href="admin.html" class="active" style="color: #fef08a;"><i class="fas fa-user-shield"></i> Postal Officer Admin</a>
+            <a href="javascript:void(0)" onclick="Auth.logout()"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        </div>
+    </nav>
+
+    <!-- 4. Admin Content -->
+    <div class="admin-container">
+        <!-- Metric KPI Cards -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon" style="background: var(--info-bg); color: var(--info);"><i class="fas fa-users"></i></div>
+                <div class="metric-info">
+                    <h4>Registered Collectors</h4>
+                    <span id="metric-users">0</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon" style="background: var(--success-bg); color: var(--success);"><i class="fas fa-box"></i></div>
+                <div class="metric-info">
+                    <h4>Consignment Orders</h4>
+                    <span id="metric-orders">0</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon" style="background: var(--warning-bg); color: var(--warning);"><i class="fas fa-stamp"></i></div>
+                <div class="metric-info">
+                    <h4>Catalog Items</h4>
+                    <span id="metric-items">0</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon" style="background: #ede9fe; color: #6d28d9;"><i class="fas fa-wallet"></i></div>
+                <div class="metric-info">
+                    <h4>Active PDA Accounts</h4>
+                    <span id="metric-accounts">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Catalog Management -->
+        <div class="admin-section">
+            <div class="admin-section-header">
+                <h2><i class="fas fa-layer-group"></i> Philatelic Materials Management</h2>
+                <button class="btn-primary" onclick="openNewItemModal()">
+                    <i class="fas fa-plus"></i> Add New Commemorative Stamp
+                </button>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Item Code</th>
+                            <th>Title</th>
+                            <th>Postal Circle</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-items-tbody">
+                        <tr><td colspan="7" style="text-align: center; color: #64748b; padding: 24px;">Loading items...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Orders & Speed Post Consignment Management -->
+        <div class="admin-section">
+            <div class="admin-section-header">
+                <h2><i class="fas fa-shipping-fast"></i> Speed Post Orders & Dispatches</h2>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Order No</th>
+                            <th>Date</th>
+                            <th>Amount & Method</th>
+                            <th>Tracking Consignment</th>
+                            <th>Current Status</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-orders-tbody">
+                        <tr><td colspan="6" style="text-align: center; color: #64748b; padding: 24px;">Loading orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Special Cancellation Requests -->
+        <div class="admin-section">
+            <div class="admin-section-header">
+                <h2><i class="fas fa-stamp"></i> Collector Postmark Cancellation Requests</h2>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Special Postmark</th>
+                            <th>Collector Instructions</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-cancellations-tbody">
+                        <tr><td colspan="5" style="text-align: center; color: #64748b; padding: 24px;">Loading requests...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div id="new-item-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 650px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> Add Philatelic Material to Catalog</h3>
+                <button class="modal-close-btn" onclick="closeNewItemModal()">&times;</button>
+            </div>
+            <form onsubmit="handleNewItemSubmit(event)">
+                <div class="modal-body">
+                    <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+                        <div style="flex: 2;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Item Title</label>
+                            <input type="text" id="new-item-title" required placeholder="e.g. Chandrayaan-3 Historic Touchdown" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Item Code</label>
+                            <input type="text" id="new-item-code" required placeholder="STP-2026-901" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Postal Circle</label>
+                            <select id="new-item-circle" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);"></select>
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Material Type</label>
+                            <select id="new-item-type" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                                <option value="STAMP">Commemorative Stamp</option>
+                                <option value="FIRST_DAY_COVER">First Day Cover (FDC)</option>
+                                <option value="MINIATURE_SHEET">Miniature Sheet</option>
+                                <option value="POSTCARD">Postcard</option>
+                                <option value="SHEETLET">Sheetlet</option>
+                                <option value="SPECIAL_COVER">Special Cover</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Theme</label>
+                            <input type="text" id="new-item-theme" required placeholder="Wildlife, Science, History..." style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Release Year</label>
+                            <input type="number" id="new-item-year" required value="2024" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Price (₹)</label>
+                            <input type="number" step="0.5" id="new-item-price" required placeholder="25.00" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Denomination</label>
+                            <input type="text" id="new-item-denom" placeholder="₹ 25.00" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Initial Stock</label>
+                            <input type="number" id="new-item-stock" value="100" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Image URL</label>
+                        <input type="url" id="new-item-image" placeholder="https://..." style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Special Features</label>
+                        <input type="text" id="new-item-features" placeholder="Special holographic foil, commemorative seal..." style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Description</label>
+                        <textarea id="new-item-desc" rows="3" placeholder="Historical details, artist, significance..." style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);"></textarea>
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <label><input type="checkbox" id="new-item-featured" checked> Featured (New Release Carousel)</label>
+                        <label><input type="checkbox" id="new-item-popular" checked> Popular Item</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-outline" onclick="closeNewItemModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Add to Catalog</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="home.html">Home</a>
+            <a href="Philatelic Materials.html">Philatelic Materials</a>
+            <a href="Deposit Account.html">PDA Account</a>
+            <a href="Special Cancellations.html">Special Cancellations</a>
+        </div>
+        <p>&copy; 2026 Department of Posts, Ministry of Communications, Government of India. All rights reserved.</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

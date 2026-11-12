@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - India Post Philately Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        .auth-container {
+            max-width: 500px;
+            margin: calc(var(--topbar-height) + var(--header-height) + 36px) auto 50px;
+            padding: 32px;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+        .demo-box {
+            background-color: var(--accent-light);
+            border-left: 4px solid var(--accent);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+        }
+        .demo-box h4 {
+            margin: 0 0 6px 0;
+            font-size: 0.95rem;
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .demo-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .demo-btn {
+            background: white;
+            border: 1px solid #fde68a;
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #78350f;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .demo-btn:hover {
+            border-color: var(--accent);
+            background-color: #fef9c3;
+            transform: translateY(-1px);
+        }
+        .auth-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--secondary);
+        }
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-body);
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. Indian Government Accessibility Top Bar -->
+    <div class="gov-topbar">
+        <div class="gov-topbar-left">
+            <span class="emblem-flag">🇮🇳</span>
+            <span>भारत सरकार | Government of India</span>
+            <span style="opacity: 0.4;">|</span>
+            <span>संचार मंत्रालय | Ministry of Communications</span>
+        </div>
+        <div class="gov-topbar-right">
+            <div class="font-resizer">
+                <button onclick="resizeFont(-1)">A-</button>
+                <button onclick="resizeFont(0)">A</button>
+                <button onclick="resizeFont(1)">A+</button>
+            </div>
+            <span style="opacity: 0.4;">|</span>
+            <span style="font-weight: 600; color: #fef08a;">English</span>
+        </div>
+    </div>
+
+    <!-- 2. Main Portal Header -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="menu-icon" onclick="toggleNav()" title="Open Navigation Menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <a href="home.html" class="brand-section">
+                <div class="gov-crest"><i class="fas fa-stamp"></i></div>
+                <div class="brand-titles">
+                    <h1>INDIA POST <span style="color: var(--accent);">PHILATELY</span></h1>
+                    <span class="dept-tag">National Philately Deposit Account (PDA)</span>
+                </div>
+            </a>
+        </div>
+        <div class="header-right-nav">
+            <a href="home.html" class="btn-outline" style="color: white; border-color: rgba(255,255,255,0.4); padding: 8px 16px; font-size: 0.88rem;">
+                <i class="fas fa-home"></i> Home
+            </a>
+        </div>
+    </header>
+
+    <!-- 3. Side Navigation Drawer -->
+    <nav id="sideNav" class="side-nav">
+        <div class="side-nav-header">
+            <h3><i class="fas fa-compass"></i> Postal Navigation</h3>
+            <span class="close-btn" onclick="toggleNav(true)">&times;</span>
+        </div>
+        <div class="side-nav-body">
+            <a href="home.html"><i class="fas fa-home"></i> Portal Home</a>
+            <a href="Philatelic Materials.html"><i class="fas fa-layer-group"></i> Philatelic Materials Catalog</a>
+            <a href="Deposit Account.html"><i class="fas fa-wallet"></i> National PDA Dashboard</a>
+            <a href="Special Cancellations.html"><i class="fas fa-stamp"></i> Special Postmarks & Cancellations</a>
+            <a href="login.html" class="active"><i class="fas fa-sign-in-alt"></i> Account Sign In / Register</a>
+        </div>
+    </nav>
+
+    <!-- 4. Auth Box -->
+    <div class="auth-container">
+        <!-- Quick Demo Sign In Box -->
+        <div class="demo-box">
+            <h4><i class="fas fa-bolt"></i> 1-Click Demo Evaluation Sign In</h4>
+            <p style="margin: 0; font-size: 0.85rem; color: #78350f;">Click a button below to automatically load credentials and sign in:</p>
+            <div class="demo-btns">
+                <button type="button" class="demo-btn" onclick="fillDemo('philatelist', 'Password123!')">
+                    <i class="fas fa-user"></i> Collector (Aarav)
+                </button>
+                <button type="button" class="demo-btn" onclick="fillDemo('admin', 'AdminPassword123!')">
+                    <i class="fas fa-user-shield"></i> Postal Officer (Admin)
+                </button>
+            </div>
+        </div>
+
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="switchTab('login')">Sign In</div>
+            <div class="auth-tab" onclick="switchTab('register')">Open PDA Account</div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="login-username"><i class="fas fa-user"></i> Username or Registered Email</label>
+                <input type="text" id="login-username" required placeholder="e.g. philatelist or collector@philately.in">
+            </div>
+            <div class="form-group">
+                <label for="login-password"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="login-password" required placeholder="Enter password">
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 13px; font-size: 1rem; margin-top: 10px;">
+                <i class="fas fa-sign-in-alt"></i> Sign In to PDA Portal
+            </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" class="auth-form" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label for="reg-fullname">Full Name</label>
+                <input type="text" id="reg-fullname" required placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+                <label for="reg-username">Username</label>
+                <input type="text" id="reg-username" required placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label for="reg-email">Email Address</label>
+                <input type="email" id="reg-email" required placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label for="reg-phone">Mobile Number</label>
+                <input type="tel" id="reg-phone" placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group">
+                <label for="reg-password">Password</label>
+                <input type="password" id="reg-password" required minlength="6" placeholder="Min. 6 characters">
+            </div>
+            <div class="form-group">
+                <label for="reg-address">Delivery Address (for Stamp Dispatch)</label>
+                <input type="text" id="reg-address" placeholder="House/Flat No, Street, Locality">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label for="reg-city">City</label>
+                    <input type="text" id="reg-city" placeholder="City">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="reg-pincode">Pincode</label>
+                    <input type="text" id="reg-pincode" placeholder="6 digits">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="reg-role">Account Type</label>
+                <select id="reg-role">
+                    <option value="USER">Philatelist / Stamp Collector</option>
+                    <option value="OFFICER">Postal Philatelic Officer</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-secondary" style="width: 100%; justify-content: center; padding: 13px; font-size: 1rem; margin-top: 10px;">
+                <i class="fas fa-check-circle"></i> Activate PDA Account
+            </button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="home.html">Home</a>
+            <a href="Philatelic Materials.html">Philatelic Materials</a>
+            <a href="Deposit Account.html">PDA Account</a>
+            <a href="Special Cancellations.html">Special Cancellations</a>
+        </div>
+        <p>&copy; 2026 Department of Posts, Ministry of Communications, Government of India. All rights reserved.</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            if (tab === 'login') {
+                document.querySelectorAll('.auth-tab')[0].classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            } else {
+                document.querySelectorAll('.auth-tab')[1].classList.add('active');
+                document.getElementById('register-form').classList.add('active');
+            }
+        }
+
+        function fillDemo(username, password) {
+            switchTab('login');
+            document.getElementById('login-username').value = username;
+            document.getElementById('login-password').value = password;
+            handleLogin(new Event('submit'));
+        }
+
+        async function handleLogin(e) {
+            if (e) e.preventDefault();
+            const u = document.getElementById('login-username').value;
+            const p = document.getElementById('login-password').value;
+            const res = await Auth.login(u, p);
+            if (res.success) {
+                setTimeout(() => {
+                    if (res.user.role === 'ROLE_ADMIN' || res.user.role === 'ROLE_OFFICER') {
+                        location.href = 'admin.html';
+                    } else {
+                        location.href = 'Deposit Account.html';
+                    }
+                }, 600);
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const payload = {
+                fullName: document.getElementById('reg-fullname').value,
+                username: document.getElementById('reg-username').value,
+                email: document.getElementById('reg-email').value,
+                phoneNumber: document.getElementById('reg-phone').value,
+                password: document.getElementById('reg-password').value,
+                addressLine1: document.getElementById('reg-address').value,
+                city: document.getElementById('reg-city').value,
+                pincode: document.getElementById('reg-pincode').value,
+                role: document.getElementById('reg-role').value
+            };
+            const res = await Auth.register(payload);
+            if (res.success) {
+                setTimeout(() => {
+                    location.href = 'Deposit Account.html';
+                }, 800);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# Build files
+target/
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# IDE and editors
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Local tools & database
+.tools/
+data/
+*.log
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+

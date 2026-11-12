@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philatelic Item Details - India Post Philately Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="Product Detail.css">
+</head>
+<body>
+    <!-- 1. Indian Government Accessibility Top Bar -->
+    <div class="gov-topbar">
+        <div class="gov-topbar-left">
+            <span class="emblem-flag">🇮🇳</span>
+            <span>भारत सरकार | Government of India</span>
+            <span style="opacity: 0.4;">|</span>
+            <span>संचार मंत्रालय | Ministry of Communications</span>
+        </div>
+        <div class="gov-topbar-right">
+            <div class="font-resizer">
+                <button onclick="resizeFont(-1)">A-</button>
+                <button onclick="resizeFont(0)">A</button>
+                <button onclick="resizeFont(1)">A+</button>
+            </div>
+            <span style="opacity: 0.4;">|</span>
+            <span style="font-weight: 600; color: #fef08a;">English</span>
+        </div>
+    </div>
+
+    <!-- 2. Main Portal Header -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="menu-icon" onclick="toggleNav()" title="Open Navigation Menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <a href="home.html" class="brand-section">
+                <div class="gov-crest"><i class="fas fa-stamp"></i></div>
+                <div class="brand-titles">
+                    <h1>INDIA POST <span style="color: var(--accent);">PHILATELY</span></h1>
+                    <span class="dept-tag">Official Commemorative Release</span>
+                </div>
+            </a>
+        </div>
+        <div class="header-right-nav">
+            <a id="header-pda-badge" class="pda-balance-badge" style="display: none;"></a>
+            <div id="header-user-actions"></div>
+        </div>
+    </header>
+
+    <!-- 3. Side Navigation Drawer -->
+    <nav id="sideNav" class="side-nav">
+        <div class="side-nav-header">
+            <h3><i class="fas fa-compass"></i> Postal Navigation</h3>
+            <span class="close-btn" onclick="toggleNav(true)">&times;</span>
+        </div>
+        <div class="side-search-wrapper">
+            <input type="text" placeholder="Search..." class="side-search" onkeydown="if(event.key==='Enter') location.href='Philatelic Materials.html?query='+encodeURIComponent(this.value)">
+        </div>
+        <div class="side-nav-body">
+            <a href="home.html"><i class="fas fa-home"></i> Portal Home</a>
+            <a href="Philatelic Materials.html"><i class="fas fa-layer-group"></i> Philatelic Materials Catalog</a>
+            <a href="Deposit Account.html"><i class="fas fa-wallet"></i> National PDA Dashboard</a>
+            <a href="Special Cancellations.html"><i class="fas fa-stamp"></i> Special Postmarks & Cancellations</a>
+            <a href="Product Detail.html?id=1" class="active"><i class="fas fa-info-circle"></i> Product Details</a>
+            <a href="admin.html" id="side-nav-admin-link" style="display: none; color: #fef08a;"><i class="fas fa-user-shield"></i> Officer Back-Office Portal</a>
+            <a href="login.html"><i class="fas fa-sign-in-alt"></i> Account Sign In / Register</a>
+        </div>
+    </nav>
+
+    <!-- 4. Product Details Split View -->
+    <div class="container">
+        <!-- Item Image Gallery -->
+        <div class="image-gallery">
+            <div class="main-image-container">
+                <img src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=600" alt="Philatelic Item" id="main-item-image" class="main-image">
+            </div>
+            <div class="thumbnail-container" id="item-thumbnails"></div>
+        </div>
+
+        <!-- Detailed Description -->
+        <div class="item-details">
+            <h1 id="item-title">Loading Item...</h1>
+            
+            <div class="detail-meta-box">
+                <p><strong><i class="fas fa-map-marker-alt" style="color: var(--secondary);"></i> Postal Circle:</strong> <span id="item-circle">Loading...</span></p>
+                <p><strong><i class="far fa-calendar-alt" style="color: var(--info);"></i> Date of Release:</strong> <span id="item-date">Loading...</span></p>
+                <p><strong><i class="fas fa-award" style="color: var(--accent);"></i> Special Features:</strong> <span id="item-features">Loading...</span></p>
+            </div>
+
+            <p class="desc-text" id="item-desc">Loading detailed philatelic description and historical background...</p>
+
+            <!-- Price and Availability -->
+            <div class="price-availability">
+                <div class="price-display" id="item-price">₹0.00</div>
+                <div id="item-avail" style="margin-bottom: 14px;"></div>
+
+                <div class="qty-row">
+                    <label style="font-weight: 600; font-size: 0.9rem;">Quantity:</label>
+                    <button class="qty-btn" onclick="updateQuantity(-1)">-</button>
+                    <input type="number" id="order-qty-input" class="qty-input" value="1" min="1" readonly>
+                    <button class="qty-btn" onclick="updateQuantity(1)">+</button>
+                </div>
+
+                <div class="btn-action-group">
+                    <button class="add-to-deposit" onclick="orderNow('PDA_WALLET')">
+                        <i class="fas fa-wallet"></i> Order with National PDA
+                    </button>
+                    <button class="buy-now" onclick="orderNow('UPI')">
+                        <i class="fas fa-bolt"></i> Instant Buy (UPI/Card)
+                    </button>
+                    <button class="btn-outline" onclick="addToWishlist()" title="Save to Wishlist" style="padding: 14px;">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Items -->
+        <div class="related-items">
+            <h2><i class="fas fa-th-large"></i> You May Also Like (Related Philatelic Items)</h2>
+            <div class="related-grid" id="related-items-container"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="home.html">Home</a>
+            <a href="Philatelic Materials.html">Philatelic Materials</a>
+            <a href="Deposit Account.html">PDA Account</a>
+            <a href="Special Cancellations.html">Special Cancellations</a>
+            <a href="login.html">Collector Sign In</a>
+            <a href="admin.html">Postal Officer Portal</a>
+        </div>
+        <p>&copy; 2026 Department of Posts, Ministry of Communications, Government of India. All rights reserved.</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/product-detail.js"></script>
+</body>
+</html>

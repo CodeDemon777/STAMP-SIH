@@ -3,93 +3,334 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>National PDA Dashboard - India Post Philately Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="Deposit Account.css">
 </head>
 <body>
+    <!-- 1. Indian Government Accessibility Top Bar -->
+    <div class="gov-topbar">
+        <div class="gov-topbar-left">
+            <span class="emblem-flag">🇮🇳</span>
+            <span>भारत सरकार | Government of India</span>
+            <span style="opacity: 0.4;">|</span>
+            <span>संचार मंत्रालय | Ministry of Communications</span>
+        </div>
+        <div class="gov-topbar-right">
+            <div class="font-resizer">
+                <button onclick="resizeFont(-1)">A-</button>
+                <button onclick="resizeFont(0)">A</button>
+                <button onclick="resizeFont(1)">A+</button>
+            </div>
+            <span style="opacity: 0.4;">|</span>
+            <span style="font-weight: 600; color: #fef08a;">English</span>
+        </div>
+    </div>
+
+    <!-- 2. Main Portal Header -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="menu-icon" onclick="toggleNav()" title="Open Navigation Menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <a href="home.html" class="brand-section">
+                <div class="gov-crest"><i class="fas fa-stamp"></i></div>
+                <div class="brand-titles">
+                    <h1>INDIA POST <span style="color: var(--accent);">PHILATELY</span></h1>
+                    <span class="dept-tag">National Philately Deposit Account (PDA)</span>
+                </div>
+            </a>
+        </div>
+        <div class="header-right-nav">
+            <a id="header-pda-badge" class="pda-balance-badge" style="display: none;"></a>
+            <div id="header-user-actions"></div>
+        </div>
+    </header>
+
+    <!-- 3. Side Navigation Drawer -->
+    <nav id="sideNav" class="side-nav">
+        <div class="side-nav-header">
+            <h3><i class="fas fa-compass"></i> Postal Navigation</h3>
+            <span class="close-btn" onclick="toggleNav(true)">&times;</span>
+        </div>
+        <div class="side-search-wrapper">
+            <input type="text" placeholder="Search catalog..." class="side-search" onkeydown="if(event.key==='Enter') location.href='Philatelic Materials.html?query='+encodeURIComponent(this.value)">
+        </div>
+        <div class="side-nav-body">
+            <a href="home.html"><i class="fas fa-home"></i> Portal Home</a>
+            <a href="Philatelic Materials.html"><i class="fas fa-layer-group"></i> Philatelic Materials Catalog</a>
+            <a href="Deposit Account.html" class="active"><i class="fas fa-wallet"></i> National PDA Dashboard</a>
+            <a href="Special Cancellations.html"><i class="fas fa-stamp"></i> Special Postmarks & Cancellations</a>
+            <a href="Product Detail.html?id=1"><i class="fas fa-info-circle"></i> Featured Stamp Detail</a>
+            <a href="admin.html" id="side-nav-admin-link" style="display: none; color: #fef08a;"><i class="fas fa-user-shield"></i> Officer Back-Office Portal</a>
+            <a href="javascript:void(0)" onclick="Auth.logout()"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        </div>
+    </nav>
+
+    <!-- 4. Dashboard Grid Container -->
     <div class="dashboard-container">
-        <!-- Account Summary -->
+        <!-- Account Summary Card -->
         <div class="account-summary">
-            <h2>Account Summary</h2>
+            <h2><i class="fas fa-id-card"></i> National PDA Summary</h2>
             <div class="summary-card">
-                <p>Total Items: <span>120</span></p>
-                <p>Pending Orders: <span>3</span></p>
-                <p>Balance: <span>$150.00</span></p>
+                <div class="pda-num-tag">
+                    <i class="fas fa-barcode"></i> Account No: <strong id="summary-pda-number" style="color: #fef08a;">Loading...</strong>
+                </div>
+                <div class="summary-stat-grid">
+                    <div class="stat-item">
+                        <label>Available Balance</label>
+                        <span id="summary-balance" style="color: #fef08a;">₹0.00</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Pending Orders</label>
+                        <span id="summary-pending">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Total Orders</label>
+                        <span id="summary-total-items">0</span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 18px; display: flex; gap: 12px;">
+                <button class="btn-primary" style="flex: 1; justify-content: center;" onclick="openTopUpModal()">
+                    <i class="fas fa-plus-circle"></i> Top-up PDA Balance
+                </button>
+                <button class="btn-outline" style="flex: 1; justify-content: center;" onclick="openTransactionHistoryModal()">
+                    <i class="fas fa-receipt"></i> Audit Ledger
+                </button>
             </div>
         </div>
 
         <!-- Wishlist -->
         <div class="wishlist">
-            <h2>Wishlist</h2>
-            <ul>
-                <li>
-                    <div class="wishlist-item">
-                        <p>Stamp A</p>
-                        <button>Remove</button>
-                    </div>
-                </li>
-                <li>
-                    <div class="wishlist-item">
-                        <p>Stamp B</p>
-                        <button>Remove</button>
-                    </div>
-                </li>
-                <!-- Add more wishlist items as needed -->
+            <h2><i class="fas fa-heart" style="color: var(--secondary);"></i> Saved Wishlist</h2>
+            <ul id="wishlist-items-container">
+                <li style="padding: 20px; color: #64748b; text-align: center;"><i class="fas fa-spinner fa-spin"></i> Loading wishlist...</li>
             </ul>
         </div>
 
-        <!-- Order History -->
-        <div class="order-history">
-            <h2>Order History</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>#12345</td>
-                        <td>2024-08-20</td>
-                        <td>Shipped</td>
-                    </tr>
-                    <tr>
-                        <td>#12346</td>
-                        <td>2024-08-21</td>
-                        <td>In Process</td>
-                    </tr>
-                    <!-- Add more orders as needed -->
-                </tbody>
-            </table>
+        <!-- Order History & Consignments -->
+        <div class="order-history" style="grid-column: 1 / -1;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 16px;">
+                <h2 style="margin: 0; border: none; padding: 0;"><i class="fas fa-history"></i> Speed Post Consignment History</h2>
+                <a href="Philatelic Materials.html" class="btn-outline" style="font-size: 0.85rem;"><i class="fas fa-cart-plus"></i> Order From Catalog</a>
+            </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Total Amount</th>
+                            <th>Consignment Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-history-tbody">
+                        <tr><td colspan="5" style="text-align: center; color: #64748b; padding: 24px;">Loading orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Deposit Management -->
         <div class="deposit-management">
-            <h2>Deposit Management</h2>
-            <button>Add Funds</button>
-            <button>View Deposit History</button>
+            <h2><i class="fas fa-wallet"></i> PDA Deposit Management</h2>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0 0 16px 0;">Maintain advance deposit funds for automatic reservation and dispatch of upcoming commemorative stamp releases.</p>
+            <button onclick="openTopUpModal()"><i class="fas fa-credit-card"></i> Instant Online Top-Up (UPI / Net Banking / Card)</button>
+            <button onclick="openTransactionHistoryModal()"><i class="fas fa-file-invoice-dollar"></i> View Complete Audit Ledger</button>
+            <button onclick="openStandingInstructionsModal()"><i class="fas fa-tasks"></i> Standing Auto-Dispatch Preferences</button>
         </div>
 
         <!-- Track Orders -->
         <div class="track-orders">
-            <h2>Track Orders</h2>
-            <div class="tracking-details">
-                <p>Order #12345 - Expected Delivery: 2024-09-01</p>
-                <p>Order #12346 - Expected Delivery: 2024-09-05</p>
-                <!-- Add more tracking details as needed -->
+            <h2><i class="fas fa-shipping-fast" style="color: var(--secondary);"></i> Speed Post Live Consignments</h2>
+            <div id="tracking-details-container">
+                <p style="color: #64748b; padding: 10px;">Loading tracking details...</p>
             </div>
         </div>
 
         <!-- Profile Settings -->
-        <div class="profile-settings">
-            <h2>Profile Settings</h2>
-            <button>Manage Personal Information</button>
-            <button>Update Address</button>
-            <button>Payment Methods</button>
-            <button>Preferences</button>
+        <div class="profile-settings" style="grid-column: 1 / -1;">
+            <h2><i class="fas fa-user-cog"></i> Profile & Dispatch Settings</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 10px;">
+                <button onclick="openProfileModal()"><i class="fas fa-user-edit"></i> Personal Information & Contact</button>
+                <button onclick="openProfileModal()"><i class="fas fa-map-marked-alt"></i> Update Dispatch Delivery Address</button>
+                <button onclick="openStandingInstructionsModal()"><i class="fas fa-cogs"></i> Manage Standing Instructions</button>
+            </div>
         </div>
     </div>
+
+    <!-- 5. Top-Up Modal -->
+    <div id="topup-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fas fa-wallet"></i> Top-up PDA Balance</h3>
+                <button class="modal-close-btn" onclick="closeTopUpModal()">&times;</button>
+            </div>
+            <form onsubmit="handleTopUpSubmit(event)">
+                <div class="modal-body">
+                    <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0 0 16px 0;">Funds are immediately credited to your National Philately Account with atomic balance protection.</p>
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.88rem;">Select Quick Amount:</label>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button type="button" class="btn-outline" onclick="setTopUpAmount(200)">₹200</button>
+                            <button type="button" class="btn-outline" onclick="setTopUpAmount(500)">₹500</button>
+                            <button type="button" class="btn-outline" onclick="setTopUpAmount(1000)">₹1,000</button>
+                            <button type="button" class="btn-outline" onclick="setTopUpAmount(2500)">₹2,500</button>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <label for="topup-amount-input" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.88rem;">Deposit Amount (₹):</label>
+                        <input type="number" id="topup-amount-input" required min="50" step="10" placeholder="Min. ₹50.00" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 1.1rem; font-weight: bold;">
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <label for="topup-payment-method" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.88rem;">Payment Gateway Mode:</label>
+                        <select id="topup-payment-method" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.9rem;">
+                            <option value="UPI">UPI (BHIM, Google Pay, PhonePe, Paytm)</option>
+                            <option value="NET_BANKING">Internet Banking (SBI, PNB, HDFC, ICICI)</option>
+                            <option value="DEBIT_CARD">RuPay / Visa / MasterCard Debit</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-outline" onclick="closeTopUpModal()">Cancel</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-lock"></i> Pay & Deposit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 6. Transactions Audit Ledger Modal -->
+    <div id="transactions-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 760px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-invoice"></i> Philatelic Deposit Account Audit Ledger</h3>
+                <button class="modal-close-btn" onclick="closeTransactionsModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 16px; overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+                    <thead>
+                        <tr style="background: #f1f5f9; text-align: left;">
+                            <th style="padding: 10px;">Ref No</th>
+                            <th style="padding: 10px;">Date</th>
+                            <th style="padding: 10px;">Amount</th>
+                            <th style="padding: 10px;">Running Bal</th>
+                            <th style="padding: 10px;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-tbody"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-primary" onclick="closeTransactionsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Consignment Tracking Modal -->
+    <div id="tracking-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 620px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-route"></i> Speed Post Consignment Journey</h3>
+                <button class="modal-close-btn" onclick="closeTrackingModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="tracking-modal-content"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn-primary" onclick="closeTrackingModal()">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. Profile Modal -->
+    <div id="profile-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-edit"></i> Personal Information & Address</h3>
+                <button class="modal-close-btn" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <form onsubmit="handleProfileSubmit(event)">
+                <div class="modal-body">
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Full Name</label>
+                        <input type="text" id="prof-fullname" required style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Phone Number</label>
+                        <input type="text" id="prof-phone" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Delivery Address Line 1</label>
+                        <input type="text" id="prof-addr1" placeholder="House/Flat No, Apartment, Street" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 14px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">City</label>
+                            <input type="text" id="prof-city" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">State</label>
+                            <input type="text" id="prof-state" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Pincode</label>
+                        <input type="text" id="prof-pincode" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-outline" onclick="closeProfileModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 9. Standing Instructions Modal -->
+    <div id="instructions-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fas fa-tasks"></i> Standing Auto-Dispatch Preferences</h3>
+                <button class="modal-close-btn" onclick="closeInstructionsModal()">&times;</button>
+            </div>
+            <form onsubmit="handleInstructionsSubmit(event)">
+                <div class="modal-body">
+                    <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0 0 16px 0;">Whenever India Post issues new commemorative materials, they will be automatically dispatched to your address and deducted from your PDA balance.</p>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+                        <label><input type="checkbox" name="standing-items" value="Commemorative Stamps" checked> Commemorative Stamps</label>
+                        <label><input type="checkbox" name="standing-items" value="First Day Covers (FDC)" checked> First Day Covers (FDC)</label>
+                        <label><input type="checkbox" name="standing-items" value="Miniature Sheets" checked> Miniature Sheets</label>
+                        <label><input type="checkbox" name="standing-items" value="Sheetlets"> Sheetlets & Souvenir Sheets</label>
+                        <label><input type="checkbox" name="standing-items" value="Special Cancellations"> Special Cancellations & Pictorial Postmarks</label>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Special Collector Notes:</label>
+                        <textarea id="standing-notes" rows="3" placeholder="e.g. Include brochures, mint condition only, corner quadrant..." style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md);"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-outline" onclick="closeInstructionsModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Update Instructions</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="home.html">Home</a>
+            <a href="Philatelic Materials.html">Philatelic Materials</a>
+            <a href="Deposit Account.html">PDA Account</a>
+            <a href="Special Cancellations.html">Special Cancellations</a>
+            <a href="login.html">Collector Sign In</a>
+            <a href="admin.html">Postal Officer Portal</a>
+        </div>
+        <p>&copy; 2026 Department of Posts, Ministry of Communications, Government of India. All rights reserved.</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/deposit-account.js"></script>
 </body>
 </html>

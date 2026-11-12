@@ -3,126 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Philatelists Community</title>
-    <link rel="stylesheet" href="home.css">
+    <title>India Post Philately Portal - Connecting Philatelists Across India</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
-    <header>
-        <div class="menu-icon" onclick="toggleNav()">&#9776;</div>
-        <div class="logo">
-            <img src="logo.png" alt="Philatelists Community Logo">
+    <!-- 1. Indian Government Accessibility Top Bar -->
+    <div class="gov-topbar">
+        <div class="gov-topbar-left">
+            <span class="emblem-flag">🇮🇳</span>
+            <span>भारत सरकार | Government of India</span>
+            <span style="opacity: 0.4;">|</span>
+            <span>संचार मंत्रालय | Ministry of Communications</span>
         </div>
-        <div class="user-icons">
-            <a href="login.html" class="icon"><i class="fas fa-user-circle"></i></a>
+        <div class="gov-topbar-right">
+            <div class="font-resizer">
+                <button onclick="resizeFont(-1)" title="Decrease font size">A-</button>
+                <button onclick="resizeFont(0)" title="Default font size">A</button>
+                <button onclick="resizeFont(1)" title="Increase font size">A+</button>
+            </div>
+            <span style="opacity: 0.4;">|</span>
+            <span style="font-weight: 600; color: #fef08a;">English</span>
+        </div>
+    </div>
+
+    <!-- 2. Main Portal Header -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="menu-icon" onclick="toggleNav()" title="Open Navigation Menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <a href="home.html" class="brand-section">
+                <div class="gov-crest"><i class="fas fa-stamp"></i></div>
+                <div class="brand-titles">
+                    <h1>INDIA POST <span style="color: var(--accent);">PHILATELY</span></h1>
+                    <span class="dept-tag">National Philately Deposit Account (PDA)</span>
+                </div>
+            </a>
+        </div>
+        <div class="header-right-nav">
+            <a id="header-pda-badge" class="pda-balance-badge" style="display: none;" title="Your National PDA Balance"></a>
+            <div id="header-user-actions">
+                <a href="login.html" class="user-status-btn"><i class="fas fa-user-circle"></i> Sign In</a>
+            </div>
         </div>
     </header>
 
+    <!-- 3. Side Navigation Drawer -->
     <nav id="sideNav" class="side-nav">
-        <a href="javascript:void(0)" class="close-btn" onclick="toggleNav()">&times;</a>
-        <input type="text" placeholder="Search Philatelic Items..." class="side-search">
-        <a href="#home">Home</a>
-        <a href="#about-us">About Us</a>
-        <a href="/Philatelic Materials.html">Philatelic Materials</a>
-        <a href="/Deposit Account.html">National Philately Deposit Account</a>
-        <a href="/Special Cancellations.html">Special Cancellations</a>
-        <a href="Product Detail.html">product details</a>
-        <a href="#contact-us">Contact Us</a>
+        <div class="side-nav-header">
+            <h3><i class="fas fa-compass"></i> Postal Navigation</h3>
+            <span class="close-btn" onclick="toggleNav(true)">&times;</span>
+        </div>
+        <div class="side-search-wrapper">
+            <input type="text" placeholder="Search philatelic items..." class="side-search" onkeydown="if(event.key==='Enter') location.href='Philatelic Materials.html?query='+encodeURIComponent(this.value)">
+        </div>
+        <div class="side-nav-body">
+            <a href="home.html" class="active"><i class="fas fa-home"></i> Portal Home</a>
+            <a href="Philatelic Materials.html"><i class="fas fa-layer-group"></i> Philatelic Materials Catalog</a>
+            <a href="Deposit Account.html"><i class="fas fa-wallet"></i> National PDA Dashboard</a>
+            <a href="Special Cancellations.html"><i class="fas fa-stamp"></i> Special Postmarks & Cancellations</a>
+            <a href="Product Detail.html?id=1"><i class="fas fa-info-circle"></i> Featured Stamp Detail</a>
+            <a href="admin.html" id="side-nav-admin-link" style="display: none; color: #fef08a;"><i class="fas fa-user-shield"></i> Officer Back-Office Portal</a>
+            <a href="login.html"><i class="fas fa-sign-in-alt"></i> Account Sign In / Register</a>
+        </div>
     </nav>
 
+    <!-- 4. In-Flow News & Updates Ticker (Never floats over content!) -->
+    <div class="news-ticker-bar">
+        <span class="ticker-label"><i class="fas fa-bullhorn"></i> Latest Updates</span>
+        <div class="ticker-content" id="ticker-text">
+            Chandrayaan-3 First Anniversary Commemorative Stamp issued with Special Postmark across Karnataka Circle.
+        </div>
+    </div>
+
+    <!-- 5. Main Content Area -->
     <main>
         <!-- Hero Section -->
         <section class="hero">
-            <img src="hero-banner.jpg" alt="Philatelic Collection Banner">
             <div class="hero-content">
                 <h1>Connecting Philatelists Across India</h1>
-                <a href="#materials" class="cta-button">Explore Philatelic Materials</a>
+                <p>Official Commemorative Stamps, First Day Covers, Miniature Sheets & Special Cancellations delivered to your doorstep.</p>
+                <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+                    <a href="Philatelic Materials.html" class="cta-button">
+                        <i class="fas fa-compass"></i> Explore Philatelic Materials
+                    </a>
+                    <a href="Deposit Account.html" class="cta-button" style="background-color: var(--secondary); color: white;">
+                        <i class="fas fa-wallet"></i> National PDA Dashboard
+                    </a>
+                </div>
             </div>
         </section>
 
         <!-- Featured Sections -->
         <section class="featured">
-            <div class="section new-releases">
-                <h2>New Releases</h2>
-                <div class="carousel">
-                    <!-- Carousel Items -->
-                    <div class="carousel-item">New Release 1</div>
-                    <div class="carousel-item">New Release 2</div>
-                    <div class="carousel-item">New Release 3</div>
+            <!-- New Releases -->
+            <div class="section">
+                <div class="section-title-row">
+                    <h2><i class="fas fa-sparkles" style="color: var(--accent);"></i> New Releases</h2>
+                    <a href="Philatelic Materials.html?sortBy=most-recent">View All Releases <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="carousel" id="new-releases-container">
+                    <div style="padding: 30px; color: #64748b;"><i class="fas fa-spinner fa-spin"></i> Loading new stamp releases...</div>
                 </div>
             </div>
 
-            <div class="section popular-items">
-                <h2>Popular Items</h2>
-                <div class="grid">
-                    <!-- Grid Items -->
-                    <div class="grid-item">Popular Item 1</div>
-                    <div class="grid-item">Popular Item 2</div>
-                    <div class="grid-item">Popular Item 3</div>
+            <!-- Popular Items -->
+            <div class="section">
+                <div class="section-title-row">
+                    <h2><i class="fas fa-fire" style="color: var(--secondary);"></i> Popular Collector Items</h2>
+                    <a href="Philatelic Materials.html?sortBy=most-popular">Explore All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="grid" id="popular-items-container">
+                    <div style="padding: 30px; color: #64748b;"><i class="fas fa-spinner fa-spin"></i> Loading popular items...</div>
                 </div>
             </div>
 
-            <div class="section how-it-works">
-                <h2>How It Works</h2>
+            <!-- How PDA Works -->
+            <div class="section" id="about-us">
+                <div class="section-title-row">
+                    <h2><i class="fas fa-shield-alt" style="color: var(--primary);"></i> National Philately Deposit Account (PDA)</h2>
+                </div>
                 <div class="steps">
-                    <div class="step">
-                        <h3>1. Explore</h3>
-                        <p>Discover philatelic materials from across India.</p>
+                    <div class="step-card">
+                        <div class="step-icon-badge" style="background: var(--info-bg); color: var(--info);">
+                            <i class="fas fa-search-location"></i>
+                        </div>
+                        <h3>1. Explore Catalog</h3>
+                        <p>Browse exclusive commemorative stamps, special covers, and sheetlets issued by postal circles across India.</p>
                     </div>
-                    <div class="step">
-                        <h3>2. Add to Deposit Account</h3>
-                        <p>Select your items and add them to your National Philately Deposit Account.</p>
+                    <div class="step-card">
+                        <div class="step-icon-badge" style="background: var(--warning-bg); color: var(--warning);">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <h3>2. Maintain PDA Balance</h3>
+                        <p>Deposit funds in advance. Configured standing instructions automatically reserve and dispatch new issues upon release.</p>
                     </div>
-                    <div class="step">
-                        <h3>3. Order & Receive</h3>
-                        <p>Place your order and receive your items at your doorstep.</p>
+                    <div class="step-card">
+                        <div class="step-icon-badge" style="background: var(--success-bg); color: var(--success);">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h3>3. Doorstep Delivery</h3>
+                        <p>Orders are dispatched through Speed Post with end-to-end consignment tracking straight to your registered address.</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <div class="updates-box" id="updatesBox">
-        <h2>Latest Updates</h2>
-        <p id="updateText">Update 1: New stamp collection released by the Delhi Postal Circle.</p>
-    </div>
-
+    <!-- Footer -->
     <footer>
         <div class="footer-links">
-            <a href="#terms">Terms of Service</a>
-            <a href="#privacy">Privacy Policy</a>
-            <a href="#faqs">FAQs</a>
+            <a href="home.html">Home</a>
+            <a href="Philatelic Materials.html">Philatelic Materials</a>
+            <a href="Deposit Account.html">PDA Account</a>
+            <a href="Special Cancellations.html">Special Cancellations</a>
+            <a href="login.html">Collector Sign In</a>
+            <a href="admin.html">Postal Officer Portal</a>
         </div>
         <div class="social-media">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
-        <p>&copy; 2024 Philatelists Community. All rights reserved.</p>
+        <p>&copy; 2026 Department of Posts, Ministry of Communications, Government of India. All rights reserved.</p>
     </footer>
 
-    <script>
-        function toggleNav() {
-            var sideNav = document.getElementById("sideNav");
-            if (sideNav.style.width === "250px") {
-                sideNav.style.width = "0";
-            } else {
-                sideNav.style.width = "250px";
-            }
-        }
-
-        // Dynamic update content
-        const updates = [
-            "Update 1: New stamp collection released by the Delhi Postal Circle.",
-            "Update 2: Workshop on rare philatelic materials scheduled for next week.",
-            "Update 3: New feature added to the National Philately Deposit Account.",
-            "Update 4: Special cancellation stamp available in Mumbai this month.",
-        ];
-        let updateIndex = 0;
-        setInterval(() => {
-            updateIndex = (updateIndex + 1) % updates.length;
-            document.getElementById("updateText").textContent = updates[updateIndex];
-        }, 30000);
-    </script>
+    <script src="js/api.js"></script>
+    <script src="js/home.js"></script>
 </body>
 </html>
