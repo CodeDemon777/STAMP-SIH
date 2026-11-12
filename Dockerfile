@@ -17,12 +17,15 @@ RUN mvn clean package -DskipTests=true
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-# Create unprivileged system user for OWASP container security
-RUN addgroup -S postgroup && adduser -S postuser -G postgroup
-USER postuser
+# Create unprivileged system user for OWASP container security and assign directory permissions
+RUN addgroup -S postgroup && adduser -S postuser -G postgroup \
+    && mkdir -p /app/data \
+    && chown -R postuser:postgroup /app
 
-# Copy built artifact from builder
-COPY --from=builder /app/target/stamp-sih-philately-1.0.0.jar app.jar
+# Copy built artifact from builder with correct ownership
+COPY --chown=postuser:postgroup --from=builder /app/target/stamp-sih-philately-1.0.0.jar app.jar
+
+USER postuser
 
 # Render dynamic port binding support
 ENV PORT=8085
