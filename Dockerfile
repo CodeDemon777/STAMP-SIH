@@ -7,12 +7,8 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copy source code and static assets
+# Copy Java source code and static web resources
 COPY src ./src
-COPY css ./css
-COPY js ./js
-COPY images ./images
-COPY *.html ./
 
 # Package executable fat JAR (skipping test execution during container build)
 RUN mvn clean package -DskipTests=true
